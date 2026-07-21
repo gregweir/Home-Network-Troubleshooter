@@ -1,10 +1,10 @@
-from homenet.utils import Finding
+from homenet.utils import Finding, learn_more_book
 from homenet.output import plain
 
 
 def _f(status, summary="A finding", why="Why it matters text", check="dns", title="DNS"):
     return Finding(check=check, title=title, status=status, summary=summary,
-                   why_it_matters=why, learn_more="Home Networking for Real People — in development. Updates at https://tartanleaf.com/books/home-networking")
+                   why_it_matters=why, learn_more=learn_more_book())
 
 
 def test_render_includes_summary_and_learn_more():

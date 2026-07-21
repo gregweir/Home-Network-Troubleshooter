@@ -22,8 +22,8 @@ def book_url(slug: str = "home-networking") -> str:
 
 
 def learn_more_book() -> str:
-    """Default Learn-more sentence (no 'Learn more:' prefix)."""
-    return f"Home Networking for Real People — in development. Updates at {BOOK_HOME}"
+    """Default Learn-more URL (no 'Learn more:' prefix). Evergreen: just the link."""
+    return BOOK_HOME
 
 
 def learn_more_site() -> str:

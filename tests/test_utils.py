@@ -23,10 +23,8 @@ def test_finding_rejects_invalid_status():
                 why_it_matters="w", learn_more="l")
 
 
-def test_learn_more_book_contains_book_url_and_in_development_language():
-    s = learn_more_book()
-    assert BOOK_HOME in s
-    assert "in development" in s
+def test_learn_more_book_returns_book_url():
+    assert learn_more_book() == BOOK_HOME
 
 
 def test_book_url_known_slugs():

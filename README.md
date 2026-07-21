@@ -64,6 +64,19 @@ pipx install git+https://github.com/gregweir/Home-Network-Troubleshooter.git
 
 That's it — `homenet` is now available from any terminal. (If you downloaded this source code instead, open a terminal in the project folder and run `pipx install .`)
 
+#### Trouble on Windows? (`Unable to read current working directory`)
+
+On some Windows setups, the install above fails near the end with a message like `fatal: Unable to read current working directory: No such file or directory`. This is a known quirk in how `pipx` re-clones a git URL on Windows — it's not a problem with `homenet`, and the fix is to install from a local copy instead. In PowerShell:
+
+```powershell
+cd $HOME
+git clone https://github.com/gregweir/Home-Network-Troubleshooter.git
+cd Home-Network-Troubleshooter
+pipx install .
+```
+
+If `pipx` says `homenet` is already installed, run `pipx uninstall homenet` first, or use `pipx install --force .`. Then check it with `homenet --version`.
+
 ### Keeping it up to date, and removing it
 
 - **Update:** `pipx upgrade homenet`

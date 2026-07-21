@@ -17,3 +17,7 @@ venv/
 .idea/
 .vscode/
 *.swp
+
+# Local planning / agent artifacts (not part of the published project)
+docs/superpowers/
+.superpowers/

@@ -4,7 +4,6 @@ from __future__ import annotations
 from io import StringIO
 
 from rich.console import Console
-from rich.panel import Panel
 from rich.text import Text
 
 from ..utils import Finding

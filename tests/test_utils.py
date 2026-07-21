@@ -38,8 +38,7 @@ def test_book_url_known_slugs():
 def test_learn_more_site():
     assert learn_more_site() == "Updates at https://tartanleaf.com"
 
-import ipaddress
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 
 import homenet.utils as u
 
@@ -120,4 +119,45 @@ def test_default_gateway_ip_none_when_no_default(monkeypatch):
     import io
     monkeypatch.setattr("builtins.open", lambda p, *a, **k: io.StringIO(proc_content) if str(p) == "/proc/net/route" else open(p, *a, **k))
     monkeypatch.setattr(u.platform, "system", lambda: "Linux")
+    assert u.default_gateway_ip() is None
+
+
+def _netstat_proc(stdout: str):
+    p = MagicMock()
+    p.stdout = stdout
+    p.returncode = 0
+    return p
+
+
+def test_default_gateway_ip_windows(monkeypatch):
+    # Realistic Windows `netstat -rn` output: header + default route + a non-default route.
+    # Columns: Network Destination, Netmask, Gateway, Interface, Metric.
+    stdout = (
+        "===========================================================================\n"
+        "Interface List\n"
+        "12...00 1a 2b 3c 4d 5e ......Microsoft Wi-Fi Adapter\n"
+        "===========================================================================\n"
+        "\n"
+        "IPv4 Route Table\n"
+        "===========================================================================\n"
+        "Active Routes:\n"
+        "Network Destination        Netmask          Gateway       Interface  Metric\n"
+        "          0.0.0.0          0.0.0.0      192.168.1.1    192.168.1.42     25\n"
+        "        127.0.0.0        255.0.0.0         127.0.0.1        127.0.0.1   331\n"
+        "===========================================================================\n"
+    )
+    monkeypatch.setattr(u.platform, "system", lambda: "Windows")
+    monkeypatch.setattr(u.subprocess, "run", lambda *a, **k: _netstat_proc(stdout))
+    assert u.default_gateway_ip() == "192.168.1.1"
+
+
+def test_default_gateway_ip_zero_returns_none(monkeypatch):
+    # Windows default line whose gateway column is 0.0.0.0 -> no gateway.
+    stdout = (
+        "Active Routes:\n"
+        "Network Destination        Netmask          Gateway       Interface  Metric\n"
+        "          0.0.0.0          0.0.0.0          0.0.0.0    192.168.1.42     25\n"
+    )
+    monkeypatch.setattr(u.platform, "system", lambda: "Windows")
+    monkeypatch.setattr(u.subprocess, "run", lambda *a, **k: _netstat_proc(stdout))
     assert u.default_gateway_ip() is None

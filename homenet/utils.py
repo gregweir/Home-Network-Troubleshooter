@@ -63,7 +63,6 @@ import platform
 import subprocess
 
 import requests
-import psutil  # imported for availability; checks may use psutil directly
 
 _CGNAT = ipaddress.ip_network("100.64.0.0/10")
 _PRIVATE_NETWORKS = (
@@ -158,9 +157,16 @@ def _gateway_netstat() -> str | None:
         return None
     for line in out.stdout.splitlines():
         stripped = line.strip()
-        low = stripped.lower()
-        if low.startswith("default") or stripped.startswith("0.0.0.0"):
+        if stripped.startswith("default"):
             parts = stripped.split()
             if len(parts) >= 2:
-                return parts[1]
+                gw = parts[1]
+                return None if gw == "0.0.0.0" else gw
+        elif stripped.startswith("0.0.0.0"):
+            # Windows `netstat -rn` default route:
+            # Network Destination, Netmask, Gateway, Interface, Metric
+            parts = stripped.split()
+            if len(parts) >= 3:
+                gw = parts[2]
+                return None if gw == "0.0.0.0" else gw
     return None

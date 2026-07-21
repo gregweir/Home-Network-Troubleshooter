@@ -32,6 +32,15 @@ def test_cli_unknown_subcommand_exits_2(capsys):
     assert code == 2
 
 
+def test_cli_unknown_subcommand_json_to_stderr(capsys):
+    code = cli.main(["bogus", "--json"])
+    captured = capsys.readouterr()
+    assert code == 2
+    assert captured.out == ""
+    obj = json.loads(captured.err)
+    assert "error" in obj
+
+
 def test_cli_subcommand_dns(monkeypatch, capsys):
     from homenet.checks import dns
     monkeypatch.setattr(dns.socket, "getaddrinfo", lambda *a, **k: [None])

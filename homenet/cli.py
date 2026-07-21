@@ -7,6 +7,7 @@ import sys
 from .checks import CHECKS, ORDER, ALIASES
 from .output import plain as plain_out
 from .output import json as json_out
+from .utils import Finding, learn_more_book
 from . import __version__
 
 _INTRO = "Let's check your home network…"
@@ -26,7 +27,6 @@ def _run_checks(names: list[str], verbose: bool) -> list:
         try:
             findings.extend(CHECKS[name].run(verbose=verbose))
         except Exception as exc:  # a flaky check never aborts the whole run
-            from .utils import Finding, learn_more_book
             findings.append(Finding(
                 check=name, title=name, status="error",
                 summary=f"The {name} check failed to run: {exc}",
@@ -67,7 +67,7 @@ def main(argv: list[str] | None = None) -> int:
         resolved = _resolve(args.check)
         if resolved is None:
             if args.json:
-                sys.stdout.write(json_out.render_error(
+                sys.stderr.write(json_out.render_error(
                     f"I don't have a check called '{args.check}'. Try one of: {', '.join(ORDER)}"))
             else:
                 print(f"I don't have a check called '{args.check}'. "

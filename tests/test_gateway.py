@@ -1,5 +1,3 @@
-from unittest.mock import patch, MagicMock
-
 from homenet.checks import gateway
 
 

@@ -42,7 +42,9 @@ def _scan_linux() -> list[tuple[str, int, int]] | None:
 
 def _scan_macos() -> list[tuple[str, int, int]] | None:
     try:
-        out = subprocess.run(["airport", "-s"], capture_output=True, text=True, timeout=5)
+        out = subprocess.run(
+            ["/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport", "-s"],
+            capture_output=True, text=True, timeout=5)
     except (OSError, subprocess.SubprocessError):
         return None
     if out.returncode != 0:
@@ -73,14 +75,12 @@ def _scan_windows() -> list[tuple[str, int, int]] | None:
     if out.returncode != 0:
         return None
     results = []
-    channel = None
     for line in out.stdout.splitlines():
         m = re.match(r"\s*Channel\s*:\s*(\d+)", line, re.IGNORECASE)
         if m:
             channel = int(m.group(1))
             freq = 2412 if channel <= 14 else 5180
             results.append(("", freq, 0))
-            channel = None
     return results if results else None
 
 

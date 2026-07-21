@@ -15,29 +15,63 @@ A friendly home network troubleshooter that diagnoses common problems and explai
 
 Every warning the tool prints includes a *Learn more* link pointing back to the book.
 
-## Install
+## Installing homenet
 
-With [pipx](https://pypa.github.io/pipx/) (recommended — keeps `homenet` isolated):
+`homenet` is a **command-line tool** — it runs in a terminal, not a window. You install it once and then run `homenet` any time you want to check your network.
 
-```bash
-pipx install .
+It needs **Python 3.10 or newer** on your computer, and a small helper tool called **[pipx](https://pypa.github.io/pipx/)**. pipx installs `homenet` cleanly and keeps it separate from the rest of your system, so it won't interfere with anything else. Three steps:
+
+### Step 1 — Check you have Python 3.10 or newer
+
+Open a terminal (see *How to open a terminal* below) and type:
+
+```
+python3 --version
 ```
 
-Or from GitHub:
+If it prints `Python 3.10` or higher (for example `Python 3.12.1`), you're set — go to Step 2. If it says "command not found" or shows an older version, install Python first:
 
-```bash
+- **macOS:** Download the installer from <https://www.python.org/downloads/macos/> and run it. Or, if you use [Homebrew](https://brew.sh/): `brew install python`
+- **Windows:** Download from <https://www.python.org/downloads/windows/> — during setup, tick the box **"Add python.exe to PATH"**. Or get "Python" from the Microsoft Store.
+- **Linux:** Most distributions already have Python 3.10+. If not, use your package manager. On Ubuntu/Debian: `sudo apt update && sudo apt install python3 python3-pip python3-venv`
+
+**How to open a terminal:**
+- **macOS:** Applications → Utilities → Terminal
+- **Windows:** Start menu → type `PowerShell` (or "Command Prompt") → open it
+- **Linux:** Usually `Ctrl`+`Alt`+`T`, or search for "Terminal"
+
+### Step 2 — Install pipx (the installer helper)
+
+First check whether you already have it:
+
+```
+pipx --version
+```
+
+If that prints a version number, skip to Step 3. Otherwise install pipx:
+
+- **macOS:** `brew install pipx` then `pipx ensurepath` — close your terminal and open a new one afterward.
+- **Windows:** `pip install --user pipx` then `python -m pipx ensurepath` — close your terminal and open a new one afterward.
+- **Linux:** On Ubuntu/Debian: `sudo apt install pipx` then `pipx ensurepath`. On other distributions: `pip install --user pipx` then `python -m pipx ensurepath`. Close and reopen your terminal.
+
+### Step 3 — Install homenet
+
+With pipx ready, install homenet straight from GitHub (no need to download anything first):
+
+```
 pipx install git+https://github.com/gregweir/Home-Network-Troubleshooter.git
 ```
 
-Or, in a virtual environment:
+That's it — `homenet` is now available from any terminal. (If you downloaded this source code instead, open a terminal in the project folder and run `pipx install .`)
 
-```bash
-python -m venv .venv
-.venv/bin/pip install .
-.venv/bin/homenet
-```
+### Keeping it up to date, and removing it
 
-**Requirements:** Python 3.10 or newer. Works on Linux, macOS, and Windows.
+- **Update:** `pipx upgrade homenet`
+- **Uninstall:** `pipx uninstall homenet`
+
+### Requirements
+
+Python 3.10 or newer. Works on Linux, macOS, and Windows. Some checks need a working internet connection; `homenet` degrades gracefully and explains when it can't run something.
 
 ## Usage
 
@@ -93,4 +127,8 @@ homenet --verbose
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](LICENSE). Free to use, modify, and share.
+
+## Author & Credits
+
+homenet is written by **Greg Weir** and published by **[tartanleaf.com](https://tartanleaf.com)** as the companion tool to *Home Networking for Real People* (part of the *Smart Tech for Real People* series). The book is forthcoming; follow tartanleaf.com for updates.

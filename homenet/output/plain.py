@@ -44,7 +44,14 @@ def render(findings: list[Finding], title: str | None = None,
             for key, value in f.details.items():
                 console.print(f"  [dim]{key}: {value}[/dim]")
 
-        console.print(f"  [dim]Learn more: {f.learn_more}[/dim]")
         console.print()
+
+    # One consolidated Learn-more line at the end, not repeated after every
+    # finding. Findings may carry different URLs; print each unique one once.
+    seen: set[str] = set()
+    for f in findings:
+        if f.learn_more and f.learn_more not in seen:
+            seen.add(f.learn_more)
+            console.print(f"[dim]Learn more: {f.learn_more}[/dim]")
 
     return buf.getvalue()

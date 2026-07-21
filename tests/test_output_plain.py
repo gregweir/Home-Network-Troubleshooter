@@ -33,3 +33,14 @@ def test_render_verbose_includes_details():
     out = plain.render([f], verbose=True, use_colors=False)
     assert "median_ms" in out
     assert "12.0" in out
+
+
+def test_render_learn_more_appears_once_at_end():
+    # The Learn-more line is consolidated to the end of the report, not
+    # repeated after every finding (all findings share the same URL here).
+    out = plain.render([_f("ok"), _f("warn"), _f("info")], use_colors=False)
+    assert out.count("Learn more:") == 1
+    # And it sits after every finding summary, not interleaved.
+    last_finding = out.rindex("A finding")
+    learn_more = out.index("Learn more:")
+    assert learn_more > last_finding

@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+.mypy_cache/
+
+# Editor / local
+.claude/
+.idea/
+.vscode/
+*.swp

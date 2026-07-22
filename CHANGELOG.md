@@ -5,6 +5,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-07-22
+
+### Changed
+- **`upnp`** check — the "no UPnP response" summary now notes outright that this
+  isn't a problem (UPnP is optional and many routers leave it off by default), so
+  the info-level finding doesn't read as an alarm.
+
 ## [0.1.0] - 2026-07-21
 
 Initial release of `homenet`, the friendly home network troubleshooter —

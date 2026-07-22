@@ -51,7 +51,7 @@ def run(verbose: bool = False) -> list[Finding]:
         )]
     return [Finding(
         check="upnp", title="UPnP", status="info",
-        summary="Your router did not answer a UPnP discovery request.",
+        summary="Your router did not answer a UPnP discovery request. That's not a problem — UPnP is optional and many routers leave it off by default.",
         why_it_matters="UPnP being off is perfectly fine and often safer. It just means devices can't open ports automatically — you'd forward ports by hand if you ever need to.",
         learn_more=learn_more_book(),
         details={"response": False} if verbose else None,

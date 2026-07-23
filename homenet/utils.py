@@ -3,22 +3,27 @@ from __future__ import annotations
 
 from dataclasses import dataclass, asdict
 
-# --- tartanleaf.com URLs (book is forthcoming / in development) ---
-BOOK_HOME = "https://tartanleaf.com/books/home-networking"
-BOOK_SERIES = "https://tartanleaf.com/books/smart-tech-for-real-people"
-SITE = "https://tartanleaf.com"
-HELP_URL = "https://tartanleaf.com/netcheck/help"
+# --- canonical tartanleaf.com URLs (book is in development) ---
+BOOK_HOME = "https://www.tartanleaf.com/smart-tech/home-networking/"
+BOOK_SERIES = "https://www.tartanleaf.com/smart-tech/"
+SITE = "https://www.tartanleaf.com"
+HELP_URL = "https://www.tartanleaf.com/netcheck/help/"
+PROJECT_URL = "https://www.tartanleaf.com/netcheck/"
 
 _VALID_STATUS = {"ok", "warn", "info", "error", "skip"}
 
 
 def book_url(slug: str = "home-networking") -> str:
-    """Return a tartanleaf.com URL for the given slug."""
+    """Return a canonical tartanleaf.com URL for the given slug."""
     if slug == "home-networking":
         return BOOK_HOME
     if slug == "smart-tech-for-real-people":
         return BOOK_SERIES
-    return f"{SITE}/{slug}"
+    if slug == "netcheck/help":
+        return HELP_URL
+    if slug == "netcheck":
+        return PROJECT_URL
+    return f"{SITE}/{slug}/"
 
 
 def learn_more_book() -> str:

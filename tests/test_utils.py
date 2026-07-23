@@ -1,4 +1,7 @@
-from homenet.utils import Finding, book_url, learn_more_book, learn_more_site, BOOK_HOME
+from homenet.utils import (
+    Finding, book_url, learn_more_book, learn_more_site,
+    BOOK_HOME, BOOK_SERIES, HELP_URL, PROJECT_URL, SITE,
+)
 
 
 def test_finding_to_dict_details_defaults_to_empty_dict():
@@ -29,12 +32,13 @@ def test_learn_more_book_returns_book_url():
 
 def test_book_url_known_slugs():
     assert book_url("home-networking") == BOOK_HOME
-    assert book_url("smart-tech-for-real-people") == "https://tartanleaf.com/books/smart-tech-for-real-people"
-    assert book_url("netcheck/help") == "https://tartanleaf.com/netcheck/help"
+    assert book_url("smart-tech-for-real-people") == BOOK_SERIES
+    assert book_url("netcheck/help") == HELP_URL
+    assert book_url("netcheck") == PROJECT_URL
 
 
 def test_learn_more_site():
-    assert learn_more_site() == "Updates at https://tartanleaf.com"
+    assert learn_more_site() == f"Updates at {SITE}"
 
 from unittest.mock import MagicMock
 

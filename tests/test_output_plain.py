@@ -13,7 +13,7 @@ def test_render_includes_summary_and_learn_more():
     assert "A finding" in out
     assert "Why it matters text" in out
     assert "Learn more:" in out
-    assert "tartanleaf.com/books/home-networking" in out
+    assert "tartanleaf.com/smart-tech/home-networking" in out
 
 
 def test_render_no_colors_when_disabled():

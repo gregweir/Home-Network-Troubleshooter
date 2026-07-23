@@ -4,16 +4,15 @@ A friendly home network troubleshooter that diagnoses common problems and explai
 
 `homenet` checks your router, DNS, double NAT, UPnP, internet speed, and Wi-Fi congestion — then tells you what it found and why it matters, in language for humans (not sysadmins).
 
+> **Project status:** Early public release, version 0.1.1. The core diagnostic checks are usable now, but results may vary by operating system, network configuration, and permissions. Bug reports and practical feedback are welcome.
+
 ## Companion to the book
 
-`homenet` is the companion tool to **Home Networking for Real People**, part of the *Smart Tech for Real People* series.
+homenet is a free companion utility for the forthcoming *Home Networking for Real People*. The book is still in development and is not currently available for purchase. The utility works independently and does not require the book.
 
-📘 **The book is forthcoming / in development.** Updates and chapters will appear at:
-- **https://tartanleaf.com/books/home-networking** — the main book page
-- **https://tartanleaf.com/books/smart-tech-for-real-people** — the series page
-- **https://tartanleaf.com** — the publisher site (follow for updates)
-
-Every warning the tool prints includes a *Learn more* link pointing back to the book.
+- **https://www.tartanleaf.com/smart-tech/home-networking/** — the book page
+- **https://www.tartanleaf.com/smart-tech/** — the Smart Tech series page
+- **https://www.tartanleaf.com/netcheck/** — the project page (follow for updates)
 
 ## Installing homenet
 
@@ -23,11 +22,10 @@ It needs **Python 3.10 or newer** on your computer, and a small helper tool call
 
 ### Step 1 — Check you have Python 3.10 or newer
 
-Open a terminal (see *How to open a terminal* below) and type:
+Open a terminal (see *How to open a terminal* below) and check your version:
 
-```
-python3 --version
-```
+- **Windows:** `py --version`
+- **macOS / Linux:** `python3 --version`
 
 If it prints `Python 3.10` or higher (for example `Python 3.12.1`), you're set — go to Step 2. If it says "command not found" or shows an older version, install Python first:
 
@@ -62,6 +60,8 @@ With pipx ready, install homenet straight from GitHub (no need to download anyth
 pipx install git+https://github.com/gregweir/Home-Network-Troubleshooter.git
 ```
 
+This fetches the code from GitHub, so it also needs **Git** installed on your computer (Git comes preinstalled on macOS and most Linux setups; on Windows get it from <https://git-scm.com/download/win>).
+
 That's it — `homenet` is now available from any terminal. (If you downloaded this source code instead, open a terminal in the project folder and run `pipx install .`)
 
 #### Trouble on Windows? (`Unable to read current working directory`)
@@ -84,7 +84,7 @@ If `pipx` says `homenet` is already installed, run `pipx uninstall homenet` firs
 
 ### Requirements
 
-Python 3.10 or newer. Works on Linux, macOS, and Windows. Some checks need a working internet connection; `homenet` degrades gracefully and explains when it can't run something.
+Python 3.10 or newer, pipx, and Git. Works on Linux, macOS, and Windows. Some checks need a working internet connection; `homenet` degrades gracefully and explains when it can't run something.
 
 ## Usage
 
@@ -134,9 +134,26 @@ homenet --verbose
 - `1` — at least one warning
 - `2` — a check couldn't run, or a usage error
 
-## Help
+## Privacy and network activity
 
-- **https://tartanleaf.com/netcheck/help** — troubleshooting and tips (in development)
+Most checks run locally. homenet does not change router settings or upload your diagnostic report.
+
+Some tests necessarily contact external services:
+- DNS tests resolve `example.com` and `cloudflare.com`.
+- The public-address test contacts `api.ipify.org`.
+- The optional speed test downloads and uploads test data through Cloudflare's speed-test service.
+
+Results may display your router's local address and your public IP address. Verbose output can contain additional technical details. Review and redact output before posting screenshots or diagnostic reports publicly.
+
+## Limitations
+
+homenet is a diagnostic aid, not a replacement for your ISP, router manufacturer, or qualified network support. Speed results are approximate, and Wi-Fi information depends on operating-system support and permissions. homenet reports findings but does not modify network settings.
+
+## Support
+
+- **Usage help:** [NetCheck Help](https://www.tartanleaf.com/netcheck/help/)
+- **Project information:** [NetCheck](https://www.tartanleaf.com/netcheck/)
+- **Bugs and feature requests:** [GitHub Issues](https://github.com/gregweir/Home-Network-Troubleshooter/issues)
 
 ## License
 
@@ -144,4 +161,4 @@ MIT — see [LICENSE](LICENSE). Free to use, modify, and share.
 
 ## Author & Credits
 
-homenet is written by **Greg Weir** and published by **[tartanleaf.com](https://tartanleaf.com)** as the companion tool to *Home Networking for Real People* (part of the *Smart Tech for Real People* series). The book is forthcoming; follow tartanleaf.com for updates.
+homenet is written by **Greg Weir** and published by **[tartanleaf.com](https://www.tartanleaf.com)** as the companion tool to *Home Networking for Real People* (part of the *Smart Tech for Real People* series). The book is still in development; follow [tartanleaf.com](https://www.tartanleaf.com/netcheck/) for updates.
